@@ -4,6 +4,9 @@ import com.microsoft.azure.functions.ExecutionContext;
 import com.microsoft.azure.functions.annotation.CosmosDBTrigger;
 import com.microsoft.azure.functions.annotation.FunctionName;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 /**
  * Cosmos DB Trigger function that responds to changes in a Cosmos DB container.
  * This function automatically executes when documents are added, updated, or deleted
@@ -51,7 +54,8 @@ public class CosmosTrigger {
     ) {
         if (items != null && items.length > 0) {
             context.getLogger().info("Documents modified: " + items.length);
-            context.getLogger().info("First document Id: " + items[0]);
+            JsonObject firstDoc = JsonParser.parseString(items[0]).getAsJsonObject();
+            context.getLogger().info("First document Id: " + firstDoc.get("id").getAsString());
         }
     }
 }
