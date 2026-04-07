@@ -4,8 +4,8 @@ import com.microsoft.azure.functions.ExecutionContext;
 import com.microsoft.azure.functions.annotation.CosmosDBTrigger;
 import com.microsoft.azure.functions.annotation.FunctionName;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Cosmos DB Trigger function that responds to changes in a Cosmos DB container.
@@ -37,7 +37,7 @@ public class CosmosTrigger {
     /**
      * Processes changes to documents in the Cosmos DB container.
      *
-     * @param items   Array of JSON strings representing the modified documents.
+     * @param items   List of documents represented as Maps.
      * @param context The execution context for logging and function metadata.
      */
     @FunctionName("cosmos_trigger")
@@ -49,13 +49,12 @@ public class CosmosTrigger {
             connection = "COSMOS_CONNECTION",
             leaseContainerName = "leases",
             createLeaseContainerIfNotExists = true
-        ) String[] items,
+        ) List<Map<String, Object>> items,
         final ExecutionContext context
     ) {
-        if (items != null && items.length > 0) {
-            context.getLogger().info("Documents modified: " + items.length);
-            JsonObject firstDoc = JsonParser.parseString(items[0]).getAsJsonObject();
-            context.getLogger().info("First document Id: " + firstDoc.get("id").getAsString());
+        if (items != null && !items.isEmpty()) {
+            context.getLogger().info("Documents modified: " + items.size());
+            context.getLogger().info("First document Id: " + items.get(0).get("id"));
         }
     }
 }
