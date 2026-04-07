@@ -1,0 +1,6 @@
+{
+    "azureFunctions.projectLanguage": "Java",
+    "azureFunctions.projectRuntime": "~4",
+    "azureFunctions.deploySubpath": "target/azure-functions/functions-quickstart-java-azd-cosmosdb",
+    "debug.internalConsoleOptions": "neverOpen"
+}

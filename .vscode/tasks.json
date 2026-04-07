@@ -1,0 +1,26 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "clean",
+            "command": "mvn clean",
+            "type": "shell"
+        },
+        {
+            "label": "package",
+            "command": "mvn clean package -q",
+            "type": "shell"
+        },
+        {
+            "label": "host start",
+            "command": "func host start --java --language-worker -- \"-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005\"",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}/target/azure-functions/functions-quickstart-java-azd-cosmosdb"
+            },
+            "dependsOn": "package",
+            "isBackground": true,
+            "problemMatcher": "$func-java-watch"
+        }
+    ]
+}
