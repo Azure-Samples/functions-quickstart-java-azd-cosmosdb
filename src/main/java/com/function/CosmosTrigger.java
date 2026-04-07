@@ -4,9 +4,6 @@ import com.microsoft.azure.functions.ExecutionContext;
 import com.microsoft.azure.functions.annotation.CosmosDBTrigger;
 import com.microsoft.azure.functions.annotation.FunctionName;
 
-import java.util.List;
-import java.util.Map;
-
 /**
  * Cosmos DB Trigger function that responds to changes in a Cosmos DB container.
  * This function automatically executes when documents are added, updated, or deleted
@@ -37,7 +34,7 @@ public class CosmosTrigger {
     /**
      * Processes changes to documents in the Cosmos DB container.
      *
-     * @param items   List of documents represented as Maps.
+     * @param items   JSON string representing the array of modified documents.
      * @param context The execution context for logging and function metadata.
      */
     @FunctionName("cosmos_trigger")
@@ -49,12 +46,12 @@ public class CosmosTrigger {
             connection = "COSMOS_CONNECTION",
             leaseContainerName = "leases",
             createLeaseContainerIfNotExists = true
-        ) List<Map<String, Object>> items,
+        ) Object[] items,
         final ExecutionContext context
     ) {
-        if (items != null && !items.isEmpty()) {
-            context.getLogger().info("Documents modified: " + items.size());
-            context.getLogger().info("First document Id: " + items.get(0).get("id"));
+        if (items != null && items.length > 0) {
+            context.getLogger().info("Documents modified: " + items.length);
+            context.getLogger().info("First document Id: " + items[0].toString());
         }
     }
 }
