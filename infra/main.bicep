@@ -160,6 +160,7 @@ module cosmosDb './app/db.bicep' = {
     tags: tags
     databaseName: cosmosSettings.database
     containerName: cosmosSettings.container
+    leaseContainerName: cosmosSettings.leaseContainer
     vnetEnabled: vnetEnabled
   }
 }

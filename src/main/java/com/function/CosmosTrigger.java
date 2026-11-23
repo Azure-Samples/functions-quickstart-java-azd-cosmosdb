@@ -45,7 +45,7 @@ public class CosmosTrigger {
             containerName = "%COSMOS_CONTAINER_NAME%",
             connection = "COSMOS_CONNECTION",
             leaseContainerName = "leases",
-            createLeaseContainerIfNotExists = true
+            createLeaseContainerIfNotExists = false
         ) Object[] items,
         final ExecutionContext context
     ) {
